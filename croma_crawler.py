@@ -14,43 +14,60 @@ create the REST framework api and to access that and test it using API Gateway
 
 """
 
-
-
 import requests
 from bs4 import BeautifulSoup
 import bs4,re,os
 from autoscraper import AutoScraper
 
-di={}
+def get_pagination():
 
-op_di1={}
+	link_url=[]
 
-list_of_links=[]
-
-paginated_links=[]
-
-url="https://www.reliancedigital.in/smartphones/c/S101711?searchQuery=:relevance&page=0"
-
-page = requests.get(url)
-
-soup=BeautifulSoup(page.content,'html.parser')
-
-all_hyperlinks=soup.findAll("div", {"class": "pl__container"})
-
-for link in all_hyperlinks[0].findAll("a"):
-
-	h_link=link.get("href")
-	print(h_link)
-
-print(" **************** ")
-
-for link in all_hyperlinks[0].findAll("img"):
-
-	h_link=link.get("data-srcset")
-	print(h_link)
+	pg_Cnt=41
+	
+	for i in range(pg_Cnt):
+		url=f"https://www.reliancedigital.in/smartphones/c/S101711?searchQuery=:relevance&page={i}"
+		print(url)
+		link_url.append(url)
+		
+	return link_url
 
 
+def scrape_website():
 
+	url_list=get_pagination()
+
+	for url in url_list:
+
+		if url is not None:
+
+			page = requests.get(url)
+
+			soup=BeautifulSoup(page.content,'html.parser')
+
+			all_hyperlinks=soup.findAll("div", {"class": "pl__container"})
+
+			hyperlinks=[]
+
+			image_links=[]
+
+			for link in all_hyperlinks[0].findAll("a"):
+
+				h_link=link.get("href")
+				print(h_link)
+				hyperlinks.append(h_link)
+
+			for link in all_hyperlinks[0].findAll("img"):
+
+				i_link=link.get("data-srcset")
+				print(i_link)
+
+				image_links.append(i_link)
+
+	return hyperlinks,image_links
+
+
+scrape_website()
 
 
 
