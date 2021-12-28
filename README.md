@@ -1,4 +1,4 @@
-# Web_Crawling_Croma
+# Web_Crawling_web site
 Crawls The Prices and Other details in Pythons Dictionary Format of Croma Store
 
 ##
