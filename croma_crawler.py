@@ -23,9 +23,9 @@ def get_pagination():
 
 	link_url=[]
 
-	pg_Cnt=41
+	pg_cnt=41
 	
-	for i in range(pg_Cnt):
+	for i in range(pg_cnt):
 		url=f"https://www.reliancedigital.in/smartphones/c/S101711?searchQuery=:relevance&page={i}"
 		print(url)
 		link_url.append(url)
